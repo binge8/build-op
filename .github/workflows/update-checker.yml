@@ -101,6 +101,7 @@ jobs:
         if: steps.cacheHash.outputs.cache-hit != 'true'
         run: |
           echo ${{ steps.combHeader.outputs.commitHash_All }} | tee .commitHash
+          echo "save=success" >> $GITHUB_ENV
       - name: 触发jx64
         if: steps.cacheHash.outputs.cache-hit != 'true'
         uses: peter-evans/repository-dispatch@main
@@ -128,7 +129,7 @@ jobs:
       - name: 微信推送
         if: always()
         run: |
-          if [ steps.cacheHash.outputs.cache-hit != 'true' ];then
+          if [ "${{ env.save }}" = "success" ];then
             curl -H "Content-Type:application/json" -X POST -d '{"token":"${{ secrets.pushbot }}","title":"源码有更新","content":"源码有更新","template":"json"}' http://www.pushplus.plus/send
           else
             curl -H "Content-Type:application/json" -X POST -d '{"token":"${{ secrets.pushbot }}","title":"源码无更新","content":"源码无更新","template":"json"}' http://www.pushplus.plus/send

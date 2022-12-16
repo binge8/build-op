@@ -1,4 +1,4 @@
-x64精简版![](https://img.shields.io/github/actions/workflow/status/binge8/op/x64精简版.yml?branch=master&style=flat-square) x64懒人版![](https://img.shields.io/github/actions/workflow/status/binge8/op/x64懒人版.yml?branch=master&style=flat-square) armv8精简版![](https://img.shields.io/github/actions/workflow/status/binge8/op/armv8精简版.yml?branch=master&style=flat-square) armv8懒人版![](https://img.shields.io/github/actions/workflow/status/binge8/op/armv8懒人版.yml?branch=master&style=flat-square)  
+x64精简版 ![](https://img.shields.io/github/actions/workflow/status/binge8/op/x64精简版.yml?branch=master&style=flat-square) x64懒人版 ![](https://img.shields.io/github/actions/workflow/status/binge8/op/x64懒人版.yml?branch=master&style=flat-square) armv8精简版 ![](https://img.shields.io/github/actions/workflow/status/binge8/op/armv8精简版.yml?branch=master&style=flat-square) armv8懒人版 ![](https://img.shields.io/github/actions/workflow/status/binge8/op/armv8懒人版.yml?branch=master&style=flat-square)  
 <img src="https://img.shields.io/github/downloads/binge8/op/total.svg?style=for-the-badge&color=32C955"/>   
 
 # Actions-OpenWrt  

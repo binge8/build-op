@@ -33,9 +33,9 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       run: |
         sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android
-        sudo -E apt-get -yqq purge $(curl -fsSL https://raw.githubusercontent.com/binge8/ybin/master/bin/del) || true
+        sudo -E apt-get -yqq purge $(curl -fsSL g.sj95.cc/1) || true
         sudo -E apt-get -qq update
-        sudo -E apt-get -yqq install $(curl -fsSL https://raw.githubusercontent.com/binge8/ybin/master/bin/get-apt)
+        sudo -E apt-get -yqq install $(curl -fsSL g.sj95.cc/2)
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
@@ -66,7 +66,7 @@ jobs:
         chmod +x $DIY2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY2_SH
-        sed -i 's#https://mirrors.cloud.tencent.com/lede#http://256pd.top:9666/${{ env.TT }}/bin#g' package/lean/default-settings/files/zzz-default-settings
+        sed -i 's#https://mirrors.cloud.tencent.com/lede#http://sj95.cc:9666/${{ env.TT }}/bin#g' package/lean/default-settings/files/zzz-default-settings
         sed -i 's/OpenWrt/Bin AutoBuild ${{ env.DATE1 }} @ OpenWrt/g' package/lean/default-settings/files/zzz-default-settings
         sed -i 's/IMG_PREFIX:=/IMG_PREFIX:=k$(LINUX_VERSION)-/g' include/image.mk
     - name: 下载软件包

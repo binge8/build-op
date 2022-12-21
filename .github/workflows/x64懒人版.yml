@@ -11,7 +11,6 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   CONFIG_FILE: ybin/bin/lx64.config
-  CORE: ybin/bin/core
   DIY1_SH: ybin/bin/diy1.sh
   DIY2_SH: ybin/bin/diy2.sh
   FEEDS_CONF: ybin/bin/feeds

@@ -32,9 +32,9 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       run: |
         sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android
-        sudo -E apt-get -yqq purge $(curl -fsSL g.sj95.cc/1) || true
+        sudo -E apt-get -yqq purge $(curl -fsSL https://raw.githubusercontent.com/binge8/ybin/master/bin/del) || true
         sudo -E apt-get -qq update
-        sudo -E apt-get -yqq install $(curl -fsSL g.sj95.cc/2)
+        sudo -E apt-get -yqq install $(curl -fsSL https://raw.githubusercontent.com/binge8/ybin/master/bin/get-apt)
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
@@ -45,13 +45,15 @@ jobs:
         git clone https://github.com/binge8/ybin.git
     #    #获取Hash
     #    cd openwrt && echo "commitHash=$(git rev-parse HEAD)" >> $GITHUB_ENV
-    #- name: 缓存
-    #  uses: actions/cache@main
-    #  with:
-    #    path: |
-    #      openwrt/build_dir
-    #      openwrt/staging_dir
-    #    key: ${{ env.TT }}-${{ env.commitHash }}
+    - name: 缓存
+      uses: actions/cache/restore@v3
+      with:
+        path: |
+          openwrt/build_dir/host*
+          openwrt/build_dir/tool*
+          openwrt/staging_dir/host*
+          openwrt/staging_dir/tool*
+        key: ${{ env.TT }}*
     - name: 更新feeds
       run: |
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
@@ -78,7 +80,7 @@ jobs:
     - name: 编译
       run: |
         cd openwrt
-        echo -e "$[`nproc`+1] thread compile"
+        echo -e "$nproc thread compile"
         make -j$[`nproc`+1] || make -j1 V=s
         echo "compile=success" >> $GITHUB_ENV
     - name: Check space usage

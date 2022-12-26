@@ -102,30 +102,12 @@ jobs:
         run: |
           echo ${{ steps.combHeader.outputs.commitHash_All }} | tee .commitHash
           echo "save=success" >> $GITHUB_ENV
-      - name: 触发jx64
+      - name: 触发缓存
         if: steps.cacheHash.outputs.cache-hit != 'true'
         uses: peter-evans/repository-dispatch@main
         with:
           token: ${{ secrets.RELEASES_TOKEN }}
-          event-type: jx64
-      - name: 触发lx64
-        if: steps.cacheHash.outputs.cache-hit != 'true'
-        uses: peter-evans/repository-dispatch@main
-        with:
-          token: ${{ secrets.RELEASES_TOKEN }}
-          event-type: lx64
-      - name: 触发jarmv8
-        if: steps.cacheHash.outputs.cache-hit != 'true'
-        uses: peter-evans/repository-dispatch@main
-        with:
-          token: ${{ secrets.RELEASES_TOKEN }}
-          event-type: jarmv8
-      - name: 触发larmv8
-        if: steps.cacheHash.outputs.cache-hit != 'true'
-        uses: peter-evans/repository-dispatch@main
-        with:
-          token: ${{ secrets.RELEASES_TOKEN }}
-          event-type: larmv8
+          event-type: Toolchain
       - name: 微信推送
         if: always()
         run: |

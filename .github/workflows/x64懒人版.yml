@@ -67,7 +67,7 @@ jobs:
         chmod +x $DIY2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY2_SH
-        sed -i 's#https://mirrors.cloud.tencent.com/lede#http://csj5.cn:9666/${{ env.TT }}/bin#g' package/lean/default-settings/files/zzz-default-settings
+        sed -i 's#https://mirrors.cloud.tencent.com/lede#http://chsj95.cn:9666/${{ env.TT }}/bin#g' package/lean/default-settings/files/zzz-default-settings
         sed -i 's/OpenWrt/Bin AutoBuild ${{ env.DATE1 }} @ OpenWrt/g' package/lean/default-settings/files/zzz-default-settings
         sed -i 's/IMG_PREFIX:=/IMG_PREFIX:=k$(LINUX_VERSION)-/g' include/image.mk
     - name: 下载软件包

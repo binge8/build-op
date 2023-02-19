@@ -40,12 +40,20 @@ jobs:
           git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
           git clone https://github.com/binge8/ybin.git
         #  #获取Hash
-        #  cd openwrt && echo "commitHash=$(git rev-parse HEAD)" >> $GITHUB_ENV
+        #  cd openwrt && echo "commitHash=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - name: 更新Feeds
         run: |
           cd openwrt
           ./scripts/feeds update -a
           ./scripts/feeds install -a
+      - name: 缓存
+        env:
+          PLATFORM: ${{ matrix.PLATFORM }}
+        uses: stupidloud/cachewrtbuild@main
+        with:
+          ccache: 'true'
+          mixkey: "${{ env.PLATFORM }}"
+          prefix: ${{ github.workspace }}
       - name: 下载Packages
         env:
           PLATFORM: ${{ matrix.PLATFORM }}
@@ -61,24 +69,8 @@ jobs:
         run: |
           cd openwrt
           echo -e "$nproc thread compile"
-          make tools/install -j$[`nproc`+1] || make tools/install -j1 V=s
-          make toolchain/install -j$[`nproc`+1] || make toolchain/install -j1 V=s
-          #make target/install -j$[`nproc`+1] || make target/install -j1 V=s
-          make diffconfig
-          make package/clean
+          make -j$[`nproc`+1] || make -j1 V=s
           echo "build=success" >> $GITHUB_ENV
-      - name: 缓存
-        if: always()
-        env:
-          PLATFORM: ${{ matrix.PLATFORM }}
-        uses: actions/cache/save@v3
-        with:
-          path: |
-            openwrt/build_dir/host*
-            openwrt/build_dir/tool*
-            openwrt/staging_dir/host*
-            openwrt/staging_dir/tool*
-          key: ${{ env.PLATFORM }}
       - name: 触发编译
         if: env.build == 'success'
         env:

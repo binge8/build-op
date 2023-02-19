@@ -49,7 +49,6 @@ jobs:
       uses: stupidloud/cachewrtbuild@main
       with:
         ccache: 'true'
-        skip_saving: 'true'
         mixkey: "${{ env.TT }}"
         prefix: ${{ github.workspace }}/openwrt
     - name: 更新feeds

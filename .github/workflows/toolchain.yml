@@ -39,8 +39,6 @@ jobs:
           df -hT $PWD
           git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
           git clone https://github.com/binge8/ybin.git
-        #  #获取Hash
-        #  cd openwrt && echo "commitHash=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - name: 更新Feeds
         run: |
           cd openwrt
@@ -53,7 +51,7 @@ jobs:
         with:
           ccache: 'true'
           mixkey: "${{ env.PLATFORM }}"
-          prefix: ${{ github.workspace }}
+          prefix: ${{ github.workspace }}/openwrt
       - name: 下载Packages
         env:
           PLATFORM: ${{ matrix.PLATFORM }}
@@ -70,23 +68,6 @@ jobs:
           cd openwrt
           echo -e "$nproc thread compile"
           make -j$[`nproc`+1] || make -j1 V=s
-          echo "build=success" >> $GITHUB_ENV
-      - name: 触发编译
-        if: env.build == 'success'
-        env:
-          PLATFORM: ${{ matrix.PLATFORM }}
-        uses: peter-evans/repository-dispatch@main
-        with:
-          token: ${{ secrets.RELEASES_TOKEN }}
-          event-type: j${{ env.PLATFORM }}
-      - name: 触发编译
-        if: env.build == 'success'
-        env:
-          PLATFORM: ${{ matrix.PLATFORM }}
-        uses: peter-evans/repository-dispatch@main
-        with:
-          token: ${{ secrets.RELEASES_TOKEN }}
-          event-type: l${{ env.PLATFORM }}
       - name: 微信推送
         if: always()
         env:

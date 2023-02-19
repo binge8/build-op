@@ -38,11 +38,6 @@ jobs:
           df -hT $PWD
           git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
           git clone https://github.com/binge8/ybin.git
-      - name: 更新Feeds
-        run: |
-          cd openwrt
-          ./scripts/feeds update -a
-          ./scripts/feeds install -a
       - name: 缓存
         env:
           PLATFORM: ${{ matrix.PLATFORM }}
@@ -51,6 +46,11 @@ jobs:
           ccache: 'true'
           mixkey: "${{ env.PLATFORM }}"
           prefix: ${{ github.workspace }}/openwrt
+      - name: 更新Feeds
+        run: |
+          cd openwrt
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
       - name: 下载Packages
         env:
           PLATFORM: ${{ matrix.PLATFORM }}

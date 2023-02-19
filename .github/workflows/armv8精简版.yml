@@ -54,7 +54,7 @@ jobs:
     - name: 缓存
       uses: stupidloud/cachewrtbuild@main
       with:
-        skip_saving: 'true'
+        ccache: 'true'
         mixkey: "${{ env.TT }}"
         prefix: ${{ github.workspace }}/openwrt
     - name: 自定义配置

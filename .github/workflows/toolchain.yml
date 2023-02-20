@@ -68,7 +68,6 @@ jobs:
           echo -e "$nproc thread compile"
           make tools/compile -j$[`nproc`+1] || make -j1 V=s
           make toolchain/compile -j$[`nproc`+1] || make -j1 V=s
-          make target/compile -j$[`nproc`+1] || make -j1 V=s
       - name: 微信推送
         if: always()
         env:
